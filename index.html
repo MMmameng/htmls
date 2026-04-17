@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>《北京人》剧中人性格测试</title>
+    <title>《北京人》剧中人 · 四维性格测试</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap');
 
         :root {
-            --primary-bg: #f5f1e8;
+            --primary-bg: #f4f0e9;
             --text-color: #3d352e;
-            --accent-color: #8c6f56;
-            --button-bg: #4a4035;
-            --button-text: #f5f1e8;
-            --card-bg: #faf6f0;
+            --accent-color: #a28a72;
+            --button-bg: #5a4b3c;
+            --button-text: #f4f0e9;
+            --card-bg: #fffbf2;
+            --border-color: #e0d9cd;
         }
 
         body {
@@ -30,18 +31,20 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 700px;
             width: 100%;
             background-color: var(--card-bg);
             border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            padding: 30px 40px;
             box-sizing: border-box;
             transition: all 0.5s ease-in-out;
         }
 
         h1, h2 {
             color: var(--button-bg);
+            font-weight: 700;
         }
 
         p {
@@ -51,24 +54,31 @@
         
         .progress-bar {
             width: 100%;
-            background-color: #e0d9cd;
+            background-color: var(--border-color);
             border-radius: 10px;
-            margin: 20px 0;
+            margin: 25px 0;
             overflow: hidden;
+            height: 12px;
         }
 
         .progress {
             width: 0;
-            height: 10px;
-            background-color: var(--accent-color);
-            transition: width 0.3s ease;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color) 0%, #c4b19d 100%);
+            transition: width 0.4s ease;
+        }
+        
+        #question-counter {
+            font-size: 0.9em;
+            color: var(--accent-color);
+            margin-bottom: 10px;
         }
 
-        button {
+        button.main-btn {
             background-color: var(--button-bg);
             color: var(--button-text);
             border: none;
-            padding: 15px 30px;
+            padding: 15px 40px;
             font-size: 1.2em;
             font-family: 'Noto Serif SC', serif;
             border-radius: 8px;
@@ -77,9 +87,10 @@
             margin-top: 20px;
         }
 
-        button:hover {
+        button.main-btn:hover {
             background-color: var(--accent-color);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .quiz-screen, .result-screen {
@@ -87,11 +98,12 @@
         }
         
         .question-container {
-            animation: fadeIn 0.5s ease;
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -105,57 +117,49 @@
         .answer-btn {
             background-color: transparent;
             color: var(--accent-color);
-            border: 2px solid var(--accent-color);
-            padding: 15px;
+            border: 2px solid var(--border-color);
+            padding: 18px;
             font-size: 1em;
             text-align: left;
             width: 100%;
             box-sizing: border-box;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
         
         .answer-btn:hover {
             background-color: var(--accent-color);
             color: var(--button-text);
+            border-color: var(--accent-color);
+            transform: scale(1.02);
         }
-
+        
         .result-card {
             animation: fadeIn 1s ease;
         }
         
         .character-name {
-            font-size: 2.5em;
+            font-size: 2.8em;
             font-weight: bold;
             color: var(--accent-color);
             margin: 10px 0;
-        }
-        
-        .character-image {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background-color: #e0d9cd;
-            margin: 20px auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5em;
-            color: var(--accent-color);
-            border: 5px solid var(--card-bg);
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
         }
         
         .similarity {
             font-size: 1.2em;
             font-weight: bold;
             margin-bottom: 20px;
+            color: var(--text-color);
         }
-
+        
         .description-box {
             text-align: left;
             background-color: var(--primary-bg);
             padding: 20px;
             border-radius: 10px;
-            margin-top: 20px;
+            margin-top: 25px;
+            border: 1px solid var(--border-color);
         }
         
         .description-box h3 {
@@ -163,10 +167,23 @@
             border-bottom: 2px solid var(--accent-color);
             padding-bottom: 10px;
             color: var(--button-bg);
+            font-size: 1.3em;
         }
         
         .description-box p {
             font-size: 1em;
+        }
+
+        .tags-header {
+             font-family: sans-serif;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h1 { font-size: 1.8em; }
+            .character-name { font-size: 2em; }
         }
     </style>
 </head>
@@ -175,19 +192,18 @@
     <div class="container">
         <!-- Start Screen -->
         <div id="start-screen">
-            <h1>《北京人》“剧”中人</h1>
-            <h2>性格测试</h2>
-            <p>欢迎来到日薄西山的曾家大院。在这里，过去与未来交织，压抑与渴望碰撞。</p>
-            <p>选择最贴近你内心想法的答案，看看你是这围城中的哪一位“北京人”。</p>
-            <button id="start-btn">开始测试</button>
+            <h1>《北京人》四维性格测试</h1>
+            <p>基于剧中人物的生命、精神、性格、社会四大向度，重新解构你的内在人格。你究竟是这古老宅院中的哪一个灵魂？</p>
+            <button id="start-btn" class="main-btn">开始探索</button>
         </div>
 
         <!-- Quiz Screen -->
         <div id="quiz-screen">
+            <div id="question-counter"></div>
             <div class="progress-bar">
                 <div id="progress" class="progress"></div>
             </div>
-            <div id="question-container" class="question-container">
+            <div id="question-container">
                 <h2 id="question"></h2>
                 <div id="answers" class="answers"></div>
             </div>
@@ -196,181 +212,101 @@
         <!-- Result Screen -->
         <div id="result-screen">
             <div class="result-card">
-                <p>测试结果</p>
-                <div id="character-image" class="character-image"></div>
+                <p>你的“剧中人”原型是：</p>
                 <h1 id="character-name"></h1>
                 <p id="similarity" class="similarity"></p>
                 
                 <div class="description-box">
-                    <h3 id="tags"></h3>
+                    <h3 id="tags" class="tags-header"></h3>
                     <p id="fun-desc"></p>
                 </div>
                 
                 <div class="description-box">
-                    <h3>人物深剖</h3>
+                    <h3>人物判词</h3>
                     <p id="serious-desc"></p>
                 </div>
                 
-                <button id="restart-btn">重新测试</button>
+                <button id="restart-btn" class="main-btn">重新测试</button>
             </div>
         </div>
     </div>
 
     <script>
         // --- DATA ---
-
-        // Personality Dimensions (from -5 to 5)
-        // tradition_vs_modern: 守旧 vs. 现代
-        // control_vs_freedom: 控制 vs. 自由
-        // selfish_vs_selfless: 利己 vs. 利他
-        // passive_vs_active: 消极 vs. 积极
-        // idealist_vs_pragmatist: 理想 vs. 现实
-        // inner_vs_outer: 内敛 vs. 外放
+        // Scoring Dimensions (from -5 to 5)
+        // lifeForce: 生命向度 (腐朽 -5 vs 原始 +5)
+        // awakening: 精神向度 (封建 -5 vs 自由 +5)
+        // actionStyle: 性格向度 (被动 -5 vs 主动 +5)
 
         const characters = [
-            { name: "曾皓", image: "皓", tags: "#老派大家长 #活在梦里 #全家靠我画饼充饥", funDesc: "你是“往昔辉煌”的忠实粉丝，朋友圈置顶的永远是“想当年”。作为家庭气氛组的暴躁担当，你的口头禅是“岂有此理！”。虽然兜比脸干净，但“排面”是你最后的倔强。", seriousDesc: "你是一个被时代抛弃的悲剧人物。你紧紧抓住那口象征着家族荣耀的棺木，以为守住了它，就守住了过去的尊严。然而，这口棺木也囚禁了你和整个家庭的未来。你的专制与怀旧，并非源于真正的强大，而是对现实衰败的恐惧。", scores: { tradition_vs_modern: 5, control_vs_freedom: 5, selfish_vs_selfless: 4, passive_vs_active: -3, idealist_vs_pragmatist: 4, inner_vs_outer: 4 } },
-            { name: "曾文清", image: "清", tags: "#间歇性踌躇满志 #持续性混吃等死 #文艺废柴", funDesc: "你的精神世界是一座无菌的象牙塔，但肉身却陷在生活的泥沼里。你爱读诗、爱作画，唯独不爱面对现实。面对心爱的人，你选择“用眼神拉丝”；面对家庭责任，你选择“装死”。", seriousDesc: "你是一只被折断翅膀的鸟，空有对蓝天的向往，却没有飞翔的力量。你善良、懦弱，对美有着深刻的感知，却被腐朽的家庭和自己孱弱的性格所吞噬。你与愫方的爱情，是你黑暗生活中唯一的光，但你连追光的勇气都没有。", scores: { tradition_vs_modern: 2, control_vs_freedom: -4, selfish_vs_selfless: -2, passive_vs_active: -5, idealist_vs_pragmatist: 5, inner_vs_outer: -5 } },
-            { name: "曾思懿", image: "懿", tags: "#曾家CEO #情绪稳定地发疯 #PUA大师", funDesc: "你是这个家的实际掌权者，手握财政大权。你的座右铭是“家不是讲理的地方，是讲我规矩的地方”。表面上温文尔雅，转过身就能给你一个“死亡微笑”。", seriousDesc: "你用冷酷和算计为自己筑起了一座权力的堡垒，却也将自己囚禁其中。你是这个封建家庭制度最忠实的捍卫者，也是它最直接的受害者。你的强硬背后，是深深的不安和对未来的恐惧。你赢得了对家庭的控制，却输掉了所有人的心。", scores: { tradition_vs_modern: 4, control_vs_freedom: 5, selfish_vs_selfless: 4, passive_vs_active: 3, idealist_vs_pragmatist: -5, inner_vs_outer: 3 } },
-            { name: "曾文彩", image: "彩", tags: "#精致的利己主义者 #人间清醒(对自己) #娘家-我的移动ATM", funDesc: "“谈钱伤感情？不，谈感情才伤钱！”这是你的人生信条。你像一只叽叽喳喳的花蝴蝶，飞舞在曾家这棵即将枯萎的大树上，只想啄食最后一点养分。你活得热烈而直接，从不内耗。", seriousDesc: "你是这个衰败家庭结出的另一颗恶果。你的自私和浅薄，是这个环境的产物。你没有文清的懦弱，也没有思懿的城府，你只是一个被物欲完全侵蚀的空心人。你对家庭的榨取，加速了它的崩溃。", scores: { tradition_vs_modern: -1, control_vs_freedom: 1, selfish_vs_selfless: 5, passive_vs_active: 2, idealist_vs_pragmatist: -4, inner_vs_outer: 5 } },
-            { name: "曾霆", image: "霆", tags: "#叛逆期少年 #嘴强王者 #向往自由的风", funDesc: "你是这个沉闷大院里唯一会“动”的生物。你渴望挣脱牢笼，但不知道笼子外是什么。你血气方刚，却也鲁莽冲动，是这个家里为数不多的“希望”，虽然这希望看起来有点不靠谱。", seriousDesc: "你是新与旧交替的夹缝中，一个挣扎的灵魂。你身上有年轻一代的躁动和对自由的本能渴望，但旧家庭的阴影依然笼罩着你。你代表着一种未经雕琢的、原始的生命冲动，是这个行将就木的家庭里，唯一可能飞出去的希望。", scores: { tradition_vs_modern: -4, control_vs_freedom: -4, selfish_vs_selfless: -1, passive_vs_active: 4, idealist_vs_pragmatist: 2, inner_vs_outer: 3 } },
-            { name: "曾瑞贞", image: "贞", tags: "#温室里的乖乖女 #内心戏超多 #暗恋天花板", funDesc: "你安静、乖巧，是这个家里最不起眼的存在，但你的内心世界却波涛汹涌。你像一株渴望阳光的含羞草，小心翼翼地伸出触角，试探着外面那个新奇的世界。", seriousDesc: "你是旧式家庭中女性悲剧命运的缩影。你温柔、善良，却注定要成为家族利益的牺牲品。你与愫方的情谊，是两个被囚禁的灵魂之间的相互慰藉。你对袁任敢的朦胧情愫，是你对新世界、新生活方式的向往，一个美好却易碎的梦。", scores: { tradition_vs_modern: 1, control_vs_freedom: -3, selfish_vs_selfless: -3, passive_vs_active: -3, idealist_vs_pragmatist: 3, inner_vs_outer: -4 } },
-            { name: "江泰", image: "泰", tags: "#职业软饭人 #无赖界的“艺术家” #只要我不尴尬尴尬的就是别人", funDesc: "你将“寄生”演绎成了一门行为艺术。在这个家里，你吃、你拿、你闹，理直气壮，毫无心理负担。你的字典里没有“尊严”二字，只有“利益”。", seriousDesc: "你是一个毫无廉耻的市井无赖，是旧文明彻底腐化后的怪胎。你撕下了曾家最后一块遮羞布，用最赤裸的方式展现了人性中的贪婪与无耻。你的存在，像一面哈哈镜，照出了这个家庭的虚伪和不堪一击。", scores: { tradition_vs_modern: 1, control_vs_freedom: 2, selfish_vs_selfless: 5, passive_vs_active: 3, idealist_vs_pragmatist: -5, inner_vs_outer: 5 } },
-            { name: "愫方", image: "愫", tags: "#人间小布丁(又苦又顶) #默默付出型人格 #灵魂捕手", funDesc: "你是这个窒息家庭里唯一的氧气。你温柔、善良、坚韧，用自己的隐忍和付出去承载着所有人的负能量。你心里有一片海，却沉默地把自己活成了一座孤岛。", seriousDesc: "你是剧中美的化身，是曹禺先生心中理想女性的代表。你兼具中国传统女性的温良与现代女性对独立、自由的追求。你的爱是无私的，你的苦是深重的。在黑暗的包围中，你始终守护着内心的那一点光。", scores: { tradition_vs_modern: 2, control_vs_freedom: -2, selfish_vs_selfless: -5, passive_vs_active: -2, idealist_vs_pragmatist: 3, inner_vs_outer: -5 } },
-            { name: "陈奶妈", image: "陈", tags: "#温暖的大家长(非官方) #人间清醒的老好人 #孩子的守护神", funDesc: "你是这个冰冷大院里最温暖的炉火。你用朴素的善良和智慧，洞察着这个家里的每一个人。你心疼每一个受苦的孩子，想用自己微薄的力量为他们撑起一把伞。", seriousDesc: "你是旧时代底层劳动人民善良、坚韧品质的象征。在这个人人自危、相互倾轧的家庭里，你的存在是唯一的暖色。你对孩子们的爱是人性中最质朴的光辉，与曾家的冷漠自私形成了鲜明的对比。", scores: { tradition_vs_modern: 3, control_vs_freedom: -1, selfish_vs_selfless: -4, passive_vs_active: 1, idealist_vs_pragmatist: -2, inner_vs_outer: 1 } },
-            { name: "小柱儿", image: "柱", tags: "#快乐儿童 #治愈系小天使 #全场唯一阳光", funDesc: "你是这个剧本里的一抹亮色，是行走的小太阳。你的世界简单而快乐，一个“刮打嘴”就能开心一整天。你代表着未经世事污染的纯真和希望。", seriousDesc: "你象征着新生、纯洁与未来。在成人世界的复杂和痛苦之外，你的存在本身就是一种希望。你简单而原始的快乐，反衬出成人世界的扭曲与沉重。你是这个即将崩塌的世界里，一颗尚未被污染的种子。", scores: { tradition_vs_modern: 0, control_vs_freedom: 0, selfish_vs_selfless: 0, passive_vs_active: 3, idealist_vs_pragmatist: 0, inner_vs_outer: 3 } },
-            { name: "张顺", image: "顺", tags: "#曾家老员工 #最佳旁观者 #打工人实录", funDesc: "你是这个家的“活历史”，见证了它的繁华与衰败。你忠诚，但不愚忠；你顺从，但心里有杆秤。你像一个沉默的镜头，记录着这里发生的一切。", seriousDesc: "你代表了那些被时代洪流裹挟的普通人。你勤恳、本分，对旧主有着传统的忠诚，但现实的残酷也让你看得分明。你是这个悲剧最忠实的见证者，你的沉默与叹息，是历史无声的回响。", scores: { tradition_vs_modern: 3, control_vs_freedom: 0, selfish_vs_selfless: -2, passive_vs_active: -1, idealist_vs_pragmatist: -3, inner_vs_outer: -2 } },
-            { name: "袁任敢", image: "敢", tags: "#人类学霸 #行走的百科全书 #理论大师情感小白", funDesc: "你是一个来自“新世界”的闯入者。你用科学、理性的视角来分析这个家庭，仿佛在观察一个即将灭绝的部落。你是“行走的知识付费”，但情感账户余额不足。", seriousDesc: "你象征着“五四”以来的科学与民主精神。你为这个封闭的家庭带来了一股新鲜的空气，你的思想是照进黑暗的一束光。然而，你终究是一个冷静的观察者，而非热情的参与者。", scores: { tradition_vs_modern: -5, control_vs_freedom: 0, selfish_vs_selfless: 0, passive_vs_active: 2, idealist_vs_pragmatist: -2, inner_vs_outer: -1 } },
-            { name: "袁园", image: "园", tags: "#元气少女 #人间小野马 #专治各种不服", funDesc: "你是“北京人”这个名字的另一层含义——原始、野性、充满生命力。你像一阵风，一阵雨，一阵闪电，猛烈地冲击着曾家腐朽的围墙。你是行走的“多巴胺”，是所有被压抑灵魂的梦。", seriousDesc: "你是一个象征性的人物，代表着被文明压抑的原始生命力和本能。你自由、健康、无拘无束，与曾家所有人的病态、压抑形成鲜明对比。你是对“文明”的拷问，也是对“新生”的呼唤。", scores: { tradition_vs_modern: -5, control_vs_freedom: -5, selfish_vs_selfless: 0, passive_vs_active: 5, idealist_vs_pragmatist: 2, inner_vs_outer: 5 } },
-            { name: "猿人", image: "猿", tags: "#终极自由 #返璞归真 #规则？不存在的", funDesc: "恭喜你，你已经超越了凡俗的困扰，达到了“天人合一”的境界。你不被任何社会规则、家庭关系、金钱情感所束缚。你就是生命力本身，是旷野的风，是山间的泉。", seriousDesc: "你是这部剧的灵魂与象征，是一个精神图腾。你代表着过去，那个充满力量、与自然合一的原始时代；你也代表着未来，人类挣脱一切文明的枷锁后，所能达到的终极自由。", scores: { tradition_vs_modern: -5, control_vs_freedom: -5, selfish_vs_selfless: 0, passive_vs_active: 5, idealist_vs_pragmatist: 5, inner_vs_outer: 0 } }
+            { name: "曾皓", tags: "#老派大家长 #最后的体面 #我说的都是规矩", funDesc: "你的口头禅是“想当年…”。你坚信，任何问题都可以通过提高音量和强调家族荣誉来解决。钱包可以空，但排场必须有。", seriousDesc: "【封建家长代表】顽固守旧的封建大家长，自私吝啬，死守棺材与旧礼教，既可怜又可鄙。", scores: { lifeForce: -4, awakening: -5, actionStyle: -2 } },
+            { name: "曾文清", tags: "#文艺废柴 #逃避虽可耻但有用 #精神鸦片", funDesc: "你是一位技艺精湛的“精神漫游者”与“现实逃避大师”。你的待办事项：1.感叹人生苦短；2.逃避所有责任；3.循环播放。", seriousDesc: "【没落少爷代表】懦弱颓废的旧式文人，有才无骨，沉溺鸦片逃避现实，无力反抗也无力担当。", scores: { lifeForce: -3, awakening: -1, actionStyle: -5 } },
+            { name: "曾思懿", tags: "#曾家CEO #PUA大师 #笑里藏刀", funDesc: "你是这个混乱家庭的实际掌舵人，精通人情世故的黑暗面。你用冰冷的微笑管理着一本关于所有人情的账本，收支必须平衡。", seriousDesc: "【封建家庭掌权媳妇】精明泼辣的管家主妇，虚伪刻薄，精于算计，是家族内耗与利益争夺的核心。", scores: { lifeForce: -3, awakening: -4, actionStyle: 4 } },
+            { name: "曾瑞贞", tags: "#觉醒ING #出走预备役 #温室反抗者", funDesc: "你一直在玩“人生”的简单模式，但最近刚发现了“反叛”这个隐藏资料片。你的搜索历史里充满了“如何开启新人生”与“自由的代价”。", seriousDesc: "【新一代觉醒女性】觉醒的年轻女性，压抑痛苦却不甘沉沦，最终选择出走，代表新生希望。", scores: { lifeForce: 2, awakening: 4, actionStyle: 2 } },
+            { name: "愫方", tags: "#人间小布丁(又苦又顶) #首席背锅侠 #爱你在心口难开", funDesc: "你是建筑学意义上的“承重墙”人格，默默撑起所有人的负能量。你的超能力是吸收戏剧性冲突，并将其转化为安静、得体的内伤。", seriousDesc: "【受压迫的旧式才女】温柔隐忍的才女，善良坚韧，默默承受苦难，内心清醒，最终与瑞贞一同逃离。", scores: { lifeForce: 1, awakening: 3, actionStyle: -4 } },
+            { name: "曾霆", tags: "#迷茫少年 #包办婚姻受害者 #想飞飞不起来", funDesc: "你的人生卡在了“新手教程”阶段，周围全是高级玩家。你想退出重开，但找不到退出键，也不知道外面有没有存档点。", seriousDesc: "【被包办婚姻毁掉的少年】懵懂怯懦的少年，被包办婚姻束缚，内心苦闷，无力自主，是封建礼教的牺牲品。", scores: { lifeForce: -2, awakening: 1, actionStyle: -3 } },
+            { name: "袁任敢", tags: "#人类学霸 #行走的荷尔蒙 #文明？我搞研究的", funDesc: "你把人生当作田野调查，社会规范是你眼中一个有趣但非强制的选修课。你的人生信条：大声说，坦率活，把所有人都搞迷糊。", seriousDesc: "【外部新文明代表】粗犷爽朗的人类学者，崇尚原始生命力，直率坦荡，与腐朽家族形成鲜明对比。", scores: { lifeForce: 4, awakening: 3, actionStyle: 4 } },
+            { name: "袁圆", tags: "#元气少女 #人间小野马 #规则是什么能吃吗", funDesc: "你是一个人形的感叹号，靠阳光和冲动运行。你是所有循规蹈矩的人内心深处，那个渴望冲破一切的“野孩子”。", seriousDesc: "【自然纯真的下一代】天真烂漫的少女，野性活泼，不受礼教束缚，是自由、纯真的象征。", scores: { lifeForce: 5, awakening: 4, actionStyle: 4 } },
+            { name: "江泰", tags: "#键盘侠鼻祖 #理论的巨人行动的矮子 #职业抱怨家", funDesc: "你对万物皆有观点，但对无事可解。你是“人生”这场游戏的专业评论员，在场外指点江山，并精准点评每个人的失误。", seriousDesc: "【寄生式知识分子】落魄无用的知识分子，牢骚满腹，眼高手低，只会空谈抱怨，毫无实干能力。", scores: { lifeForce: -3, awakening: -2, actionStyle: -2 } },
+            { name: "曾文彩", tags: "#逆来顺受 #老好人卡VIP #没我啥事", funDesc: "你的主要职能是点头、叹气，并与背景融为一体。你是家庭抓马大戏中，那段安静、无人记得的背景音乐。", seriousDesc: "【依附型旧式女性】软弱善良的旧式妇女，依附丈夫，逆来顺受，在家族中毫无话语权。", scores: { lifeForce: -3, awakening: -3, actionStyle: -4 } },
+            { name: "陈奶妈", tags: "#人间烟火气 #操心的命 #朴素的守护者", funDesc: "你是这冰冷大院里唯一还在燃烧的炉火。你相信，大部分问题都能靠一顿热饭和朴素的常识来解决。你是所有人的非官方心理顾问。", seriousDesc: "【忠心老仆 / 底层温情】淳朴厚道的老乳母，忠心护主，世俗实在，是底层善良小人物的代表。", scores: { lifeForce: 0, awakening: -2, actionStyle: 0 } },
+            { name: "张顺", tags: "#究极打工人 #老板说的都对 #沉默是金", funDesc: "你看尽了一切，听尽了一切，也沉默了一切。你的内心独白是一部无人能阅读的巨著。你的工作就是存在、服从、以及避免眼神接触。", seriousDesc: "【麻木家仆 / 封建附属】麻木恭顺的老仆人，谨守规矩，唯命是从，是封建家庭的附属工具。", scores: { lifeForce: -1, awakening: -3, actionStyle: -3 } },
+            { name: "小柱儿", tags: "#围观群众 #我是谁我在哪 #天真无辜", funDesc: "你就像一部混乱电影里的背景板小演员，努力想搞清楚剧情走向。你的世界很简单，并且你希望它能一直这么简单下去。", seriousDesc: "【底层幼童 / 未来微弱可能】陈奶妈的孙儿，年幼懵懂，朴实胆怯，是底层孩童的真实写照。", scores: { lifeForce: 1, awakening: 0, actionStyle: -2 } },
+            { name: "北京猿人", tags: "#终极自由 #返璞归真 #不服就干", funDesc: "恭喜，您已成功退订“社会”服务。你没有烦恼，只有本能。你的生存哲学很简单：吃、睡、活下去。没有会议，没有邮件。", seriousDesc: "【原始生命力象征】原始野性的象征，代表强悍、自由、本真的生命力，反衬现代文明人的萎靡虚伪。", scores: { lifeForce: 5, awakening: 5, actionStyle: 5 } }
         ];
 
         const questions = [
-            { question: "清晨醒来，你更愿意如何度过第一个小时？", answers: [
-                { text: "泡一壶好茶，翻阅一本旧书，享受宁静。", scores: { tradition_vs_modern: 1, idealist_vs_pragmatist: 1, inner_vs_outer: -1 } },
-                { text: "立刻出门晨跑，感受风和阳光。", scores: { passive_vs_active: 1, control_vs_freedom: -1, inner_vs_outer: 1 } },
-                { text: "规划好一天的任务，确保一切尽在掌握。", scores: { control_vs_freedom: 1, idealist_vs_pragmatist: -1, passive_vs_active: 1 } },
-                { text: "赖在床上，直到最后一刻才慢悠悠地起来。", scores: { passive_vs_active: -1, control_vs_freedom: -1 } }
-            ]},
-            { question: "你如何看待“家”这个概念？", answers: [
-                { text: "是规矩和传承的圣地，每个人都应恪守本分。", scores: { tradition_vs_modern: 2, control_vs_freedom: 1 } },
-                { text: "是温暖的港湾，应该充满爱与奉献。", scores: { selfish_vs_selfless: -1, idealist_vs_pragmatist: 1 } },
-                { text: "是一个需要共同经营的现实单位，利益和责任很重要。", scores: { selfish_vs_selfless: 1, idealist_vs_pragmatist: -1 } },
-                { text: "可能是一个牢笼，我渴望外面的世界。", scores: { control_vs_freedom: -2, tradition_vs_modern: -1 } }
-            ]},
-            { question: "朋友向你倾诉烦恼，你的第一反应是？", answers: [
-                { text: "安静地倾听，默默陪伴，感同身受。", scores: { selfish_vs_selfless: -1, inner_vs_outer: -1 } },
-                { text: "立刻开始分析问题，给出逻辑清晰的解决方案。", scores: { idealist_vs_pragmatist: -1, passive_vs_active: 1 } },
-                { text: "用自己的经历鼓励对方，告诉他“这都不是事儿！”", scores: { inner_vs_outer: 1, selfish_vs_selfless: 1 } },
-                { text: "感到有些无措，不知道如何回应这种强烈的情感。", scores: { inner_vs_outer: -1, passive_vs_active: -1 } }
-            ]},
-            { question: "面对一项枯燥但必须完成的工作，你会？", answers: [
-                { text: "强迫自己高效完成，纪律是第一生产力。", scores: { control_vs_freedom: 1, passive_vs_active: 1 } },
-                { text: "拖延，直到最后期限才敷衍了事。", scores: { passive_vs_active: -2 } },
-                { text: "一边抱怨一边做，但还是会把它做完。", scores: { inner_vs_outer: 1, passive_vs_active: 0 } },
-                { text: "想办法把它变得有趣，或者找人帮忙。", scores: { selfish_vs_selfless: 1, control_vs_freedom: -1 } }
-            ]},
-            { question: "你认为什么东西最能给你带来安全感？", answers: [
-                { text: "银行账户里不断增长的数字。", scores: { idealist_vs_pragmatist: -2, selfish_vs_selfless: 1 } },
-                { text: "稳定不变的社会关系和家庭结构。", scores: { tradition_vs_modern: 1, control_vs_freedom: 1 } },
-                { text: "自己不断增长的知识和技能。", scores: { tradition_vs_modern: -1, passive_vs_active: 1 } },
-                { text: "所爱之人的支持与理解。", scores: { idealist_vs_pragmatist: 1, selfish_vs_selfless: -1 } }
-            ]},
-            { question: "在一个聚会上，你更可能是？", answers: [
-                { text: "角落里观察众生的安静观察者。", scores: { inner_vs_outer: -2 } },
-                { text: "穿梭全场，和每个人都能聊上几句的社交达人。", scores: { inner_vs_outer: 2 } },
-                { text: "只和自己熟悉的两三个人待在一起。", scores: { inner_vs_outer: -1 } },
-                { text: "聚会的组织者，确保一切流程顺利。", scores: { control_vs_freedom: 1, passive_vs_active: 1 } }
-            ]},
-            { question: "如果可以拥有一种超能力，你希望是？", answers: [
-                { text: "回到过去，修正遗憾。", scores: { tradition_vs_modern: 1, idealist_vs_pragmatist: 1 } },
-                { text: "读心术，了解他人的真实想法。", scores: { control_vs_freedom: 1, selfish_vs_selfless: 1 } },
-                { text: "瞬间移动，去任何想去的地方。", scores: { control_vs_freedom: -2 } },
-                { text: "点石成金，解决一切物质烦恼。", scores: { idealist_vs_pragmatist: -2 } }
-            ]},
-            { question: "面对不公，你会选择？", answers: [
-                { text: "隐忍，相信“清者自清”，时间会证明一切。", scores: { passive_vs_active: -1, selfish_vs_selfless: -1, inner_vs_outer: -1 } },
-                { text: "据理力争，哪怕会得罪人也要讨回公道。", scores: { passive_vs_active: 1, inner_vs_outer: 1 } },
-                { text: "寻找对自己最有利的方式，可能会妥协，也可能会反击。", scores: { selfish_vs_selfless: 1, idealist_vs_pragmatist: -1 } },
-                { text: "直接用行动反抗，打破这个不公的规则。", scores: { passive_vs_active: 2, control_vs_freedom: -1 } }
-            ]},
-            { question: "你理想的爱情关系是？", answers: [
-                { text: "灵魂伴侣，即便无言，也能心意相通。", scores: { idealist_vs_pragmatist: 2, inner_vs_outer: -1 } },
-                { text: "激情四射，像两团火焰般照亮彼此。", scores: { inner_vs_outer: 2, control_vs_freedom: -1 } },
-                { text: "稳定可靠，是彼此最坚实的后盾。", scores: { tradition_vs_modern: 1, idealist_vs_pragmatist: -1 } },
-                { text: "互相成就，是事业和人生道路上的最佳拍档。", scores: { passive_vs_active: 1, selfish_vs_selfless: 1 } }
-            ]},
-            { question: "当计划被突发事件打乱时，你会？", answers: [
-                { text: "感到焦虑和愤怒，试图强行让事情回到正轨。", scores: { control_vs_freedom: 2 } },
-                { text: "有些不知所措，需要时间来适应和接受。", scores: { passive_vs_active: -1 } },
-                { text: "迅速评估现状，调整计划，寻找新的解决方案。", scores: { idealist_vs_pragmatist: -1, passive_vs_active: 1 } },
-                { text: "顺其自然，甚至觉得这样随性的发展也挺有趣。", scores: { control_vs_freedom: -1, idealist_vs_pragmatist: 1 } }
-            ]},
-            { question: "对你来说，人生最大的痛苦莫过于？", answers: [
-                { text: "失去尊严和体面。", scores: { tradition_vs_modern: 2, idealist_vs_pragmatist: 1 } },
-                { text: "失去自由，身心被束缚。", scores: { control_vs_freedom: -2 } },
-                { text: "一事无成，碌碌无为。", scores: { passive_vs_active: -1, selfish_vs_selfless: 1 } },
-                { text: "辜负了自己所爱的人。", scores: { selfish_vs_selfless: -2 } }
-            ]},
-             { question: "在做决定时，你更依赖？", answers: [
-                { text: "长辈或权威的意见。", scores: { tradition_vs_modern: 1, control_vs_freedom: 1 } },
-                { text: "自己的直觉和内心情感。", scores: { idealist_vs_pragmatist: 1, inner_vs_outer: -1 } },
-                { text: "严谨的数据和逻辑分析。", scores: { idealist_vs_pragmatist: -1, tradition_vs_modern: -1 } },
-                { text: "看哪种选择能带来最直接的好处。", scores: { selfish_vs_selfless: 2, idealist_vs_pragmatist: -1 } }
-            ]},
-             { question: "你如何处理自己的负面情绪？", answers: [
-                { text: "独自消化，不愿让别人看到自己脆弱的一面。", scores: { inner_vs_outer: -2, passive_vs_active: -1 } },
-                { text: "找人倾诉，或者通过社交活动来转移注意力。", scores: { inner_vs_outer: 2 } },
-                { text: "压抑和无视它，直到它爆发或自行消失。", scores: { control_vs_freedom: 1, passive_vs_active: -1 } },
-                { text: "通过运动或创造性的活动来释放。", scores: { passive_vs_active: 1, control_vs_freedom: -1 } }
-            ]},
-             { question: "以下哪种生活方式更吸引你？", answers: [
-                { text: "在深山老林里，过着与世隔绝、自给自足的生活。", scores: { tradition_vs_modern: -1, control_vs_freedom: -1, idealist_vs_pragmatist: 2 } },
-                { text: "在大都市中心，享受最前沿的科技和文化。", scores: { tradition_vs_modern: -2 } },
-                { text: "在安逸的小镇，邻里和睦，生活节奏缓慢。", scores: { tradition_vs_modern: 1, idealist_vs_pragmatist: -1 } },
-                { text: "不断旅行，探索不同文明和地域。", scores: { passive_vs_active: 1, control_vs_freedom: -1 } }
-            ]},
-             { question: "如果让你守护一样东西，你会选择？", answers: [
-                { text: "一个家族的百年声誉。", scores: { tradition_vs_modern: 2, control_vs_freedom: 1 } },
-                { text: "一段刻骨铭心的爱情。", scores: { idealist_vs_pragmatist: 1, selfish_vs_selfless: -1 } },
-                { text: "一个能改变世界的科学真理。", scores: { tradition_vs_modern: -1, idealist_vs_pragmatist: -1 } },
-                { text: "一个天真无邪孩子的笑容。", scores: { selfish_vs_selfless: -2 } }
-            ]}
+            { question: "当面对一个全然陌生的环境，你的第一感觉是？", answers: [ { text: "兴奋，像未开垦的荒野，充满了无限可能。", scores: { lifeForce: 2, awakening: 1 } }, { text: "警惕，先不动声色地观察，摸清这里的规则。", scores: { actionStyle: 2, lifeForce: -1 } }, { text: "不安，怀念过去熟悉的一切，希望能尽快回去。", scores: { lifeForce: -1, awakening: -2 } }, { text: "顺从，努力适应，并找到自己可以服务的角色。", scores: { awakening: -1, actionStyle: -2 } } ]},
+            { question: "一本传了数代的族谱和一个记录了新奇思想的日记本，哪个更能激起你的兴趣？", answers: [ { text: "族谱，那是家族的根，是荣耀和秩序的象征。", scores: { awakening: -2 } }, { text: "日记本，我想看看另一个灵魂不为人知的思考。", scores: { awakening: 2 } }, { text: "两者都有趣，可以对比着看，了解时代的变迁。", scores: { lifeForce: 1 } } ]},
+            { question: "家中爆发激烈争吵，你会如何介入？", answers: [ { text: "成为秩序的掌控者，用强硬手段平息纷争。", scores: { actionStyle: 3, awakening: -2 } }, { text: "默默走开，躲进自己的房间，用音乐或书籍隔绝噪音。", scores: { actionStyle: -3, lifeForce: -1 } }, { text: "试图安抚每一个人，牺牲自己来缓和气氛。", scores: { actionStyle: -2, awakening: 1 } }, { text: "在旁煽风点火，让矛盾激化，看看能捞到什么好处。", scores: { actionStyle: 2, lifeForce: -2 } } ]},
+            { question: "对你而言，“活着”的意义更接近于？", answers: [ { text: "像旷野的植物一样，自由、强韧地生长。", scores: { lifeForce: 3, awakening: 2 } }, { text: "完成自己的责任和使命，维系家族或团队的体面。", scores: { awakening: -2, actionStyle: 1 } }, { text: "寻找片刻的安宁与欢愉，逃离现实的痛苦。", scores: { lifeForce: -2, actionStyle: -3 } }, { text: "守护自己珍视的人，为他们默默付出。", scores: { actionStyle: -2, lifeForce: 1 } } ]},
+            { question: "一件精美但充满束缚的华服，和一件朴素但舒适自在的便装，你选择？", answers: [ { text: "华服，外在的体面和身份的象征至关重要。", scores: { awakening: -2, lifeForce: -1 } }, { text: "便装，身体的舒适和精神的自由优先。", scores: { awakening: 2, lifeForce: 1 } } ]},
+            { question: "面对一个你无法战胜的强大对手，你会？", answers: [ { text: "隐忍，等待时机，或者默默承受这命运。", scores: { actionStyle: -3 } }, { text: "用尽一切手段，哪怕是阴谋诡计，也要把他拉下马。", scores: { actionStyle: 4, lifeForce: -1 } }, { text: "抱怨命运不公，但除了发牢骚什么也不做。", scores: { actionStyle: -2, lifeForce: -2 } }, { text: "直接冲上去，哪怕是鸡蛋碰石头，也要表明我的态度。", scores: { actionStyle: 3, lifeForce: 2 } } ]},
+            { question: "你如何看待“金钱”？", answers: [ { text: "它是实现一切的基础，是安全感和权力的来源。", scores: { lifeForce: -1, actionStyle: 2 } }, { text: "它是身外之物，精神的富足远比它重要。", scores: { lifeForce: 1, awakening: 1 } }, { text: "它是麻烦的根源，我只想过没有金钱烦恼的生活。", scores: { actionStyle: -3 } } ]},
+            { question: "你认为规则是用来？", answers: [ { text: "维护秩序的基石，必须被严格遵守。", scores: { awakening: -4, actionStyle: 2 } }, { text: "被打破的，它存在的意义就是为了被挑战。", scores: { awakening: 4, actionStyle: 3 } }, { text: "保护弱者的工具，但有时也会成为枷锁。", scores: { awakening: 1, actionStyle: -1 } } ]},
+            { question: "如果必须选择一种声音永远陪伴你，你会选择？", answers: [ { text: "来自远古荒原的风声。", scores: { lifeForce: 3 } }, { text: "孩童天真无邪的笑声。", scores: { lifeForce: 1, actionStyle: -1 } }, { text: "旧宅里老座钟沉稳的滴答声。", scores: { awakening: -3 } }, { text: "图书馆里安静的翻书声。", scores: { awakening: 2, actionStyle: -2 } } ]},
+            { question: "你内心深处最深的恐惧是？", answers: [ { text: "被时代抛弃，失去原有的地位和尊严。", scores: { awakening: -3, lifeForce: -2 } }, { text: "失去自由，被困在一个无法逃离的地方。", scores: { awakening: 3 } }, { text: "碌碌无为，被他人轻视，无法证明自己的价值。", scores: { actionStyle: 2 } }, { text: "辜负了别人的期望，或伤害了自己想保护的人。", scores: { actionStyle: -3 } } ]},
+            { question: "在布置你的个人空间时，你最看重的是？", answers: [ { text: "充满历史感和家族印记的摆设，彰显厚重与传承。", scores: { awakening: -3, lifeForce: -2 } }, { text: "极简、开阔、充满阳光，物品越少越好。", scores: { awakening: 2, lifeForce: 3 } }, { text: "实用与秩序，每样东西都有它该在的位置，一目了然。", scores: { actionStyle: 2, awakening: -2 } }, { text: "充满艺术气息，挂着字画，摆着书籍，营造一个精神避难所。", scores: { lifeForce: -1, actionStyle: -3, awakening: 1 } } ]},
+            { question: "在团队中，你更倾向于扮演什么角色？", answers: [ { text: "领导者，制定规则，分配任务。", scores: { actionStyle: 4 } }, { text: "奉献者，默默为大家服务，不求回报。", scores: { actionStyle: -4 } }, { text: "“局外人”，保持清醒的观察，但不深入参与。", scores: { awakening: 1, lifeForce: -1 } }, { text: "破坏者，挑战现有秩序，觉得一切都很无聊。", scores: { lifeForce: 1, awakening: 2 } } ]},
+            { question: "让你感到最有活力的活动是？", answers: [ { text: "在户外进行大汗淋漓的运动。", scores: { lifeForce: 3 } }, { text: "精心策划并成功完成一个复杂的项目。", scores: { actionStyle: 3 } }, { text: "沉浸在一个虚构的故事里（小说、电影、戏剧）。", scores: { lifeForce: -2 } }, { text: "照顾家人或宠物，感受那种被需要的温暖。", scores: { lifeForce: 1, actionStyle: -2 } } ]},
+            { question: "对于未来，你的态度更接近？", answers: [ { text: "未来是危险且不可预测的，守住当下最好。", scores: { awakening: -3 } }, { text: "未来充满了机遇，我必须主动出击去争取。", scores: { actionStyle: 3, awakening: 1 } }, { text: "未来是模糊的，我感到迷茫和无力。", scores: { lifeForce: -2, actionStyle: -3 } }, { text: "未来是自由的，我渴望挣脱一切，去看看外面的世界。", scores: { awakening: 4, lifeForce: 2 } } ]},
+            { question: "当你的个人意愿与集体利益冲突时，你会？", answers: [ { text: "毫不犹豫地选择集体利益，牺牲是必要的。", scores: { awakening: -2, actionStyle: -1 } }, { text: "优先考虑个人意愿，人首先要为自己而活。", scores: { awakening: 2, actionStyle: 2 } }, { text: "痛苦地挣扎，试图找到两全其美的办法，但可能最终两边都得罪。", scores: { lifeForce: -1, awakening: 1 } }, { text: "表面上服从集体，私下里为自己谋利。", scores: { actionStyle: 3, lifeForce: -2 } } ]},
+            { question: "你认为什么样的品质最可贵？", answers: [ { text: "忠诚与本分。", scores: { awakening: -3, actionStyle: -3 } }, { text: "善良与坚韧。", scores: { lifeForce: 1, actionStyle: -2 } }, { text: "智慧与谋略。", scores: { actionStyle: 3 } }, { text: "野性与坦率。", scores: { lifeForce: 3, awakening: 2 } } ]},
+            { question: "如果人生是一场戏，你希望你的角色是？", answers: [ { text: "掌控全局、编写剧本的导演。", scores: { actionStyle: 4 } }, { text: "情感真挚、体验深刻的主角。", scores: { lifeForce: 2, awakening: 1 } }, { text: "洞察一切、推动情节的关键配角。", scores: { awakening: 2, actionStyle: -1 } }, { text: "一个活在背景里，但内心安宁的群演。", scores: { actionStyle: -4, lifeForce: -1 } } ]},
+            { question: "你如何看待自己的身体？", answers: [ { text: "是承载生命力量的容器，需要锻炼和释放。", scores: { lifeForce: 4 } }, { text: "是需要精心修饰和包装的外壳，以符合社会规范。", scores: { awakening: -2, lifeForce: -1 } }, { text: "是一副带来疲惫和痛苦的皮囊，渴望从中解脱。", scores: { lifeForce: -4, actionStyle: -4 } }, { text: "是劳作的工具，用来服务和生存。", scores: { lifeForce: 0, actionStyle: -2 } } ]},
+            { question: "闭上眼睛，你脑海中最向往的画面是？", answers: [ { text: "家族兴旺、儿孙满堂、秩序井然的盛大宴席。", scores: { awakening: -4, lifeForce: -1 } }, { text: "独自一人在山巅，俯瞰着广阔的天地。", scores: { awakening: 4, lifeForce: 3 } }, { text: "在温暖的炉火旁，与心爱的人安静地相伴。", scores: { lifeForce: 1, actionStyle: -3 } }, { text: "在混乱的战场上，成为扭转乾坤的英雄。", scores: { actionStyle: 4, lifeForce: 2 } } ]},
+            { question: "对你来说，一个“完美的一天”是怎样的？", answers: [ { text: "家族内外事务处理得井井有条，所有人都听从我的安排。", scores: { actionStyle: 4, awakening: -3 } }, { text: "在山林间自由奔跑，无拘无束，筋疲力尽但畅快淋漓。", scores: { lifeForce: 5, awakening: 3 } }, { text: "安静地度过，无人打扰，沉浸在自己的世界里。", scores: { actionStyle: -5, lifeForce: -2 } }, { text: "成功地为在意的人解决了一个难题，看到他们宽慰的笑容。", scores: { actionStyle: -2, lifeForce: 1, awakening: 0 } } ]},
+            { question: "你得到一个惊人的秘密，这个秘密既能摧毁一个旧的权威，也可能让你陷入危险，你会？", answers: [ { text: "立刻公布，真相比什么都重要。", scores: { awakening: 3, actionStyle: 4, lifeForce: 2 } }, { text: "保守秘密，用它作为筹码，在关键时刻为自己谋利。", scores: { actionStyle: 4, awakening: -1, lifeForce: -2 } }, { text: "深藏心底，这个秘密太沉重，假装不知道是最好的选择。", scores: { actionStyle: -4, awakening: -1 } }, { text: "告诉信赖的人，共同商议，但内心充满恐惧和犹豫。", scores: { actionStyle: -2, awakening: 1 } } ]},
+            { question: "一个陌生人无缘无故对你示好，你的第一反应是？", answers: [ { text: "他/她肯定别有用心，必须加倍警惕。", scores: { actionStyle: 2, lifeForce: -2 } }, { text: "真诚地回应，世界还是好人多。", scores: { lifeForce: 2, awakening: 1 } }, { text: "感到受宠若惊和不安，不知道如何应对。", scores: { actionStyle: -3, awakening: -1 } }, { text: "认为这是理所应当的，或者根本没太在意。", scores: { actionStyle: 1, awakening: -3 } } ]},
+            { question: "当需要做出重大抉择时，你更相信？", answers: [ { text: "祖辈传下来的经验和教诲。", scores: { awakening: -4 } }, { text: "自己身体的本能和直觉。", scores: { lifeForce: 4, awakening: 2 } }, { text: "严密的逻辑推演和利弊分析。", scores: { actionStyle: 3, awakening: -1 } }, { text: "内心的道德感和那份说不清的“善良”。", scores: { actionStyle: -3, awakening: 2, lifeForce: 1 } } ]}
         ];
 
-        // --- DOM Elements ---
+        // DOM Elements
         const startScreen = document.getElementById('start-screen');
         const quizScreen = document.getElementById('quiz-screen');
         const resultScreen = document.getElementById('result-screen');
         const startBtn = document.getElementById('start-btn');
         const restartBtn = document.getElementById('restart-btn');
         
+        const questionCounterEl = document.getElementById('question-counter');
         const questionEl = document.getElementById('question');
         const answersEl = document.getElementById('answers');
         const progressEl = document.getElementById('progress');
 
-        const characterImageEl = document.getElementById('character-image');
         const characterNameEl = document.getElementById('character-name');
         const similarityEl = document.getElementById('similarity');
         const tagsEl = document.getElementById('tags');
         const funDescEl = document.getElementById('fun-desc');
         const seriousDescEl = document.getElementById('serious-desc');
         
-        // --- State ---
+        // State
         let currentQuestionIndex = 0;
-        let userScores = {
-            tradition_vs_modern: 0,
-            control_vs_freedom: 0,
-            selfish_vs_selfless: 0,
-            passive_vs_active: 0,
-            idealist_vs_pragmatist: 0,
-            inner_vs_outer: 0
-        };
+        let userScores = { lifeForce: 0, awakening: 0, actionStyle: 0 };
 
-        // --- Functions ---
-
+        // Functions
         function startQuiz() {
             currentQuestionIndex = 0;
-            userScores = { tradition_vs_modern: 0, control_vs_freedom: 0, selfish_vs_selfless: 0, passive_vs_active: 0, idealist_vs_pragmatist: 0, inner_vs_outer: 0 };
+            userScores = { lifeForce: 0, awakening: 0, actionStyle: 0 };
             startScreen.style.display = 'none';
             resultScreen.style.display = 'none';
             quizScreen.style.display = 'block';
@@ -378,24 +314,24 @@
         }
 
         function showQuestion() {
-            const questionData = questions[currentQuestionIndex];
-            questionEl.textContent = questionData.question;
-            answersEl.innerHTML = '';
-            
-            // Animate new question
             const questionContainer = document.getElementById('question-container');
-            questionContainer.style.animation = 'none';
-            void questionContainer.offsetWidth; // Trigger reflow
-            questionContainer.style.animation = 'fadeIn 0.5s ease';
+            questionContainer.style.opacity = 0;
 
-            questionData.answers.forEach(answer => {
-                const button = document.createElement('button');
-                button.textContent = answer.text;
-                button.classList.add('answer-btn');
-                button.onclick = () => selectAnswer(answer.scores);
-                answersEl.appendChild(button);
-            });
-            updateProgress();
+            setTimeout(() => {
+                const questionData = questions[currentQuestionIndex];
+                questionEl.textContent = questionData.question;
+                answersEl.innerHTML = '';
+                
+                questionData.answers.forEach(answer => {
+                    const button = document.createElement('button');
+                    button.textContent = answer.text;
+                    button.classList.add('answer-btn');
+                    button.onclick = () => selectAnswer(answer.scores);
+                    answersEl.appendChild(button);
+                });
+                updateProgress();
+                questionContainer.style.opacity = 1;
+            }, 400); 
         }
         
         function selectAnswer(scores) {
@@ -416,6 +352,7 @@
         function updateProgress() {
             const progressPercentage = (currentQuestionIndex / questions.length) * 100;
             progressEl.style.width = `${progressPercentage}%`;
+            questionCounterEl.textContent = `问题 ${currentQuestionIndex + 1} / ${questions.length}`;
         }
         
         function calculateResult() {
@@ -434,32 +371,30 @@
                     bestMatch = character;
                 }
             });
-            
-            // Calculate a plausible similarity score
-            // This is a simplified model for demonstration
-            const maxPossibleDistance = 40; // Estimated max distance
+
+            // Estimate similarity percentage
+            const maxPossibleDistance = 45; // Adjusted for more questions
             let similarityPercentage = Math.max(0, 100 - (minDistance / maxPossibleDistance) * 100);
-            similarityPercentage = Math.min(99, Math.floor(similarityPercentage) + 5); // Ensure it feels high
-            
+            similarityPercentage = 80 + Math.floor(similarityPercentage / 5); // Ensure score feels high and meaningful
+            similarityPercentage = Math.min(99, similarityPercentage);
+
             showResult(bestMatch, similarityPercentage);
         }
 
-        function showResult(character, similarityPercentage) {
+        function showResult(character, similarity) {
             quizScreen.style.display = 'none';
             resultScreen.style.display = 'block';
             
-            characterImageEl.textContent = character.image;
             characterNameEl.textContent = character.name;
-            similarityEl.textContent = `与 ${character.name} 的相似度为 ${similarityPercentage}%`;
+            similarityEl.textContent = `与该人物的性格相似度为 ${similarity}%`;
             tagsEl.textContent = character.tags;
             funDescEl.textContent = character.funDesc;
             seriousDescEl.textContent = character.seriousDesc;
         }
 
-        // --- Event Listeners ---
+        // Event Listeners
         startBtn.addEventListener('click', startQuiz);
         restartBtn.addEventListener('click', startQuiz);
-
     </script>
 </body>
 </html>
